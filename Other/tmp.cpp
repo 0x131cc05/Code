@@ -18,7 +18,7 @@ inline void NTT(int a[], int len, int type) {
     }
     if (!type) for (int i = 0, inv = Pow(len, mod - 2);i < len;i++)
         a[i] = (LL)a[i] * inv % mod;
-}
+}  
 int frac[N], inv[N], A[N * 4], B[N * 4];
 int main() { 
     freopen("in1.in", "r", stdin), freopen("in1.out", "w", stdout); 
