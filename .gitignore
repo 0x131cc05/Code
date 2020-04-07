@@ -2,3 +2,6 @@
 *.in
 *.out
 *.zip
+/.vscode/
+t1
+t1.pub
