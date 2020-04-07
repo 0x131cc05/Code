@@ -1,0 +1,1 @@
+t3.exe <task9_5.in>task9_5.out
