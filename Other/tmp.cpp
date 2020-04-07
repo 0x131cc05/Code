@@ -20,7 +20,7 @@ inline void NTT(int a[], int len, int type) {
         a[i] = (LL)a[i] * inv % mod;
 }
 int frac[N], inv[N], A[N * 4], B[N * 4];
-int main() {
+int main() { 
     freopen("in1.in", "r", stdin), freopen("in1.out", "w", stdout); 
     int n; LL m; scanf("%d%lld", &n, &m), frac[0] = 1, m %= mod - 1;
     for (int i = 1;i <= n;i++) frac[i] = (LL)frac[i - 1] * i % mod;
