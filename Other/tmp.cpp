@@ -1,112 +1,154 @@
-#include "iostream"
-#include "algorithm"
-#include "cstring"
-#include "cstdio"
-#include "cmath"
-#include "vector"
-#include "map"
-#include "set"
-#include "queue"
+#include<bits/stdc++.h>
 using namespace std;
-#define MAXN 100006
-//#define int long long
-#define rep(i, a, b) for (int i = (a), i##end = (b); i <= i##end; ++i)
-#define per(i, a, b) for (int i = (a), i##end = (b); i >= i##end; --i)
-#define pii pair<int,int>
-#define fi first
-#define se second
-#define mp make_pair
-#define pb push_back
-#define eb emplace_back
-#define vi vector<int>
-#define all(x) (x).begin() , (x).end()
-#define mem( a ) memset( a , 0 , sizeof a )
-#define P 998244353
-typedef long long ll;
-int n , m , k;
-int A[MAXN] , ch[MAXN];
-vector<pii> G[MAXN] , pr;
-int p2[MAXN];
-
-int siz[MAXN] , ea;
-int g[MAXN][19] , dep[MAXN];
-ll dis[MAXN];
-
-int J[MAXN] , iJ[MAXN];
-int C( int a , int b ) {
-    if( a < b ) return 0;
-    return J[a] * 1ll * iJ[b] % P * iJ[a - b] % P;
+const int M=1000000007,P=998244353;
+const int N=500005,E=262144;
+#define inf 2147483647
+int n,m,i,q,l1,l2,len,x[N],y,k,p,u,v,j;
+int st[N],tp,dep[N],fa[20][N],head[N],Next[N*2],adj[N*2],leng[N*2];
+int a[N],b[N],c[N],dp[N],num[N],dis[N],tot,d[N],dfn[N];
+void dfs(int i,int f)
+{
+	int j;
+	fa[0][i]=f;
+	dfn[i]=++k;
+	for(j=head[i];j!=0;j=Next[j])
+		if(adj[j]!=f)
+		{
+			dep[adj[j]]=dep[i]+1;
+			dfs(adj[j],i);
+		}
 }
-
-void dfs( int u , int fa ) {
-    siz[u] = ch[u];
-    for( auto& t : G[u] ) if( t.fi != fa ) {
-            int v = t.fi;
-            g[v][0] = u , dep[v] = dep[u] + 1 , dis[v] = dis[u] + t.se;
-            for( int k = 1 ; k < 19 ; ++ k )
-                if( g[g[v][k - 1]][k - 1] ) g[v][k] = g[g[v][k - 1]][k - 1];
-                else break;
-            dfs( v , u );
-            siz[u] += siz[v];
-            ( ea += 1ll * t.se * ( ( C( m , k ) - C( siz[v] , k ) + P ) % P - C( m - siz[v] , k ) + P ) % P ) %= P;
-        }
+int lca(int x,int y)
+{
+	int i;
+	if(dep[x]<dep[y])
+		swap(x,y);
+	for(i=19;i>=0;--i)
+		if(dep[fa[i][x]]>=dep[y])
+			x=fa[i][x];
+	for(i=19;i>=0;--i)
+		if(fa[i][x]!=fa[i][y])
+			x=fa[i][x],y=fa[i][y];
+	return (x==y?x:fa[0][x]);
 }
-int lca( int u , int v ) {
-    if( dep[u] < dep[v] ) swap( u , v );
-    for( int k = 18 ; k >= 0 ; -- k ) if( dep[g[u][k]] >= dep[v] ) u = g[u][k];
-    if( u == v ) return u;
-    for( int k = 18 ; k >= 0 ; -- k )
-        if( g[u][k] != g[v][k] ) u = g[u][k] , v = g[v][k];
-    return g[u][0];
+void Push(int u,int v)
+{
+	Next[++k]=head[u];
+	head[u]=k;
+	adj[k]=v;
 }
-
-ll d[506][506];
-
-int Pow( int x , int a ) {
-    int ret = 1;
-    while( a ) {
-        if( a & 1 ) ret = 1ll * ret * x % P;
-        x = 1ll * x * x % P , a >>= 1;
+void add(int u,int v,int w)
+{
+	Next[++k]=head[u];
+	head[u]=k;
+	adj[k]=v;
+	leng[k]=w;
+}
+inline void ins(int x)
+{
+	if(st[tp]==x)
+		return;
+    if (tp==0)
+    {
+        st[tp=1]=x;
+        num[++tot]=x;
+        return;
     }
-    return ret;
-}
-
-void solve() {
-//    cout << 10ll * Pow( 3 , P - 2 ) % P << endl;
-    cin >> n >> m >> k;
-    p2[0] = J[0] = iJ[0] = 1;
-    rep( i , 1 , n ) p2[i] = p2[i - 1] * 2 % P , J[i] = 1ll * J[i - 1] * i % P , iJ[i] = Pow( J[i] , P - 2 );
-    int u , v , w;
-    rep( i , 1 , m ) scanf("%d",A + i) , ch[A[i]] = 1;
-    rep( i , 2 , n ) {
-        scanf("%d%d%d",&u,&v,&w) , G[u].eb( mp( v , w ) ) , G[v].eb( mp( u , w ) );
+    int ance=lca(st[tp],x);
+    while ((tp>1)&&(dep[ance]<dep[st[tp-1]]))
+    {
+        add(st[tp-1],st[tp],dep[st[tp]]-dep[st[tp-1]]);
+        --tp;
     }
-    dep[1] = 1 , dfs( 1 , 1 );
-    ea = ea * 2 % P;
-    rep( i , 1 , m ) rep( j , i , m ) d[i][j] = d[j][i] = dis[A[i]] + dis[A[j]] - 2 * dis[lca( A[i] , A[j] )];
-    int ok , res = 0;
-    ll rd , re;
-//    cout << lca( A[3] , A[4] ) << endl;
-    rep( i , 1 , m ) {
-        rep( j , 1 , i - 1 ) {
-            rd = d[i][j] , ok = 2;
-            rep(t, 1, m) if (t != i && t != j) {
-                if (max(d[t][i], d[t][j]) > rd) continue;
-                if (d[t][i] == rd && t < j) continue;
-                if (d[t][j] == rd && t < i) continue;
-                ok++;
-            }
-            ( res += 1ll * C( ok - 2 , k - 2 ) * ( rd % P ) % P ) %= P;
-        }
-    }
-//    cout << res << ' ' << ea << endl;
-    cout << 1ll * ( ea - res + P ) % P * ( Pow( C( m , k ) , P - 2 ) ) % P << endl;
+    if (dep[ance]<dep[st[tp]]) add(ance,st[tp],dep[st[tp]]-dep[ance]),--tp;
+    if ((!tp)||(st[tp]!=ance)) st[++tp]=ance,num[++tot]=ance;
+    st[++tp]=x,num[++tot]=x;
 }
-
-signed main() {
-//    freopen("in1.in","r",stdin);
-//    freopen("fuckout","w",stdout);
-//    int T;cin >> T;while( T-- ) solve();
-    solve();
+bool cmp(int a,int b)
+{
+	return dfn[a]<dfn[b];
 }
-
+void dfs2(int i)
+{
+	int j;
+	for(j=head[i];j!=0;j=Next[j])
+	{
+		dfs2(adj[j]);
+		int di=dis[adj[j]]+leng[j];
+		if((di+d[dp[adj[j]]]-1)/d[dp[adj[j]]]<(dis[i]+d[dp[i]]-1)/d[dp[i]]
+			||(((di+d[dp[adj[j]]]-1)/d[dp[adj[j]]]==(dis[i]+d[dp[i]]-1)/d[dp[i]])&&dp[adj[j]]<dp[i]))
+		{
+			dp[i]=dp[adj[j]];
+			dis[i]=di;
+		}
+	}
+}
+void dfs3(int i,int f)
+{
+	int j;
+	for(j=head[i];j!=0;j=Next[j])
+	{
+		int di=dis[i]+leng[j];
+		if((dis[adj[j]]+d[dp[adj[j]]]-1)/d[dp[adj[j]]]>(di+d[dp[i]]-1)/d[dp[i]]
+			||((dis[adj[j]]+d[dp[adj[j]]]-1)/d[dp[adj[j]]]==(di+d[dp[i]]-1)/d[dp[i]]&&dp[adj[j]]>dp[i]))
+		{
+			dp[adj[j]]=dp[i];
+			dis[adj[j]]=di;
+		}
+		dfs3(adj[j],i);
+	}
+}
+int main()
+{
+	scanf("%d",&n);
+	for(i=1;i<n;++i)
+	{
+		scanf("%d %d",&u,&v);
+		Push(u,v);
+		Push(v,u);
+	}
+	dep[1]=1;
+	k=0;
+	dfs(1,0);
+	for(i=1;i<20;++i)
+		for(j=1;j<=n;++j)
+			fa[i][j]=fa[i-1][fa[i-1][j]];
+	scanf("%d",&q);
+	memset(head,0,sizeof(head));
+	d[0]=1;
+	for(i=1;i<=n;++i)
+		dis[i]=1<<30;
+	while(q--)
+	{
+		y=k=0;
+		scanf("%d %d",&m,&p);
+		for(i=1;i<=m;++i)
+		{
+			scanf("%d %d",&a[i],&d[i]);
+			c[++y]=a[i];
+			dp[a[i]]=i;
+			dis[a[i]]=0;
+		}
+		for(i=1;i<=p;++i)
+		{
+			scanf("%d",&b[i]);
+			c[++y]=b[i];
+		}
+		c[++y]=1;
+		sort(c+1,c+1+y,cmp);
+		for(i=1;i<=y;++i)
+			ins(c[i]);
+		if(tp)while(--tp)add(st[tp],st[tp+1],dep[st[tp+1]]-dep[st[tp]]);
+		dfs2(1);
+		dfs3(1,0);
+		for(i=1;i<=p;++i)
+			printf("%d ",dp[b[i]]);
+		printf("\n");
+		for(i=1;i<=tot;++i)
+		{
+			head[num[i]]=dp[num[i]]=0;
+			dis[num[i]]=1<<30;
+		}
+		tot=0;
+	}
+}
