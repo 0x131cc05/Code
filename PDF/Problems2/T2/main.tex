@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{xeCJK}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{booktabs}
+\usepackage{geometry}  
+\usepackage{titlesec}   
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{titlesec} 
+% \pagestyle{fancy} 
+\geometry{left=2.5cm,right=3.5cm,top=2.5cm,bottom=2.5cm}
+
+\setlength{\parindent}{2em}
+\linespread{1.3}
+
+\date{}
+\begin{document}
+\newpagestyle{main}{            
+    \sethead{膜您赛}{}{\sectiontitle}     %设置页眉
+    \setfoot{}{第\thepage 页，共2页}{}      %设置页脚，可以在页脚添加 \thepage  显示页数
+    \headrule                                      % 添加页眉的下划线
+    \footrule                                       %添加页脚的下划线
+}
+\pagestyle{main}
+
+\setcounter{section}{1}
+
+\section{T2 魔法}
+
+破镜终有重圆时。\par
+精灵之树上住着$n$个小精灵，每个小精灵都有其唯一的一个$1$到$n$的编号。树上共有$n - 1$根树枝，每根树枝都连接着两个小精灵。你可以认为所有小精灵连成了一个树型的结构。\par
+作为精灵之树的主人，你将施展$n$次魔法以抵御接下来的暴风雨。在第$i$次施法中，如果树上编号为$1, 2, \cdots , i$的小精灵恰好连成了一条简单路径，才能保证魔力的最大化，此时第$i$次施法是成功的。我们将施法成功的总次数称为这棵树的\textbf{魔力值}。\par
+魔法总是在更新换代，为了保持精灵之树魔力的平衡，需要对精灵之树进行$q$次调整，每次调整会选择两个编号为$u, v$的\textbf{节点}，然后交换住在这两个节点上的小精灵。\par
+前任精灵之主的低语时时刻刻都在提醒着你时间紧迫，对于每一次调整你都需要尽快回答整棵树调整之后的魔力值是多少。\par
+
+\subsection{输入格式}
+
+第一行为一个整数$n$，表示精灵之树的大小。\par
+第二行包含$n$个整数，第$i$个整数$p_i$表示一开始住在节点$i$的小精灵的编号。\par
+接下来$n - 1$行，每行两个整数$a_i, b_i$表示树上的一条边。\par
+接下来为一个整数$q$，表示调整的次数。\par
+接下来$q$行，每行两个整数$u, v$，表示一次调整。
+
+\subsection{输出格式}
+
+输出$q$行，第$i$行为第$i$次调整之后整棵树的魔力值。
+
+\subsection{样例 1 输入}
+
+\begin{lstlisting}
+    4
+    1 2 3 4
+    1 2
+    2 3
+    2 4
+    3
+    1 4
+    2 4
+    1 2
+\end{lstlisting}
+
+\subsection{样例 1 输出}
+
+\begin{lstlisting}
+    3
+    3
+    1
+\end{lstlisting}
+
+\subsection{数据范围}
+
+对于$20\%$的数据，满足$n, q\leq 100$。\par
+对于$40\%$的数据，满足$n, q\leq 2000$。\par
+对于另$20\%$的数据，$a_i = i, b_i = i + 1$。\par
+对于$100\%$的数据，$2\leq n, q\leq 5\times 10^5$，保证$p$是一个$1$到$n$的排列。\par
+\textbf{数据不保证$u, v$不相同}
+
+\end{document}
