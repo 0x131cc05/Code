@@ -100,7 +100,10 @@ inline void pre(int nw) {
     ID[base] = 1, present[1] = base, dfs(1), all[r] = tot;
 }
 
+#define open(x) freopen(x".in", "r", stdin), freopen(x".out", "w", stdout)
+
 int main() {
+    open("task20");
     memset(trans, -1, sizeof(trans));
     for (int i = 1; i <= 8; i++) pre(i);
     int T; scanf("%d", &T);

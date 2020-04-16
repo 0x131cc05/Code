@@ -100,15 +100,23 @@ inline int solve() {
     return tmp;
 }
 
+template<class T> inline void read(T &x) {
+    x = 0; char c = getchar();
+    while (!isdigit(c)) c = getchar();
+    while (isdigit(c)) x = x * 10 + c - '0', c = getchar();
+}
+
+#define open(x) freopen(x".in", "r", stdin), freopen(x".out", "w", stdout)
+
 int main() {
-    scanf("%d", &n);
-    for (int i = 1; i <= n; i++) scanf("%d", &num[i]);
-    for (int i = 1, a, b; i < n; i++) scanf("%d%d", &a, &b), adde(a, b);
+    read(n);
+    for (int i = 1; i <= n; i++) read(num[i]);
+    for (int i = 1, a, b; i < n; i++) read(a), read(b), adde(a, b);
     dfs(1, 0), build(1, 1, n);
     for (int i = 1; i <= n; i++) check(i);
-    int q; scanf("%d", &q);
+    int q; read(q);
     while (q--) {
-        int u, v; scanf("%d%d", &u, &v);
+        int u, v; read(u), read(v);
         if (fa[u]) s[fa[u]].erase(num[u]); if (fa[v]) s[fa[v]].erase(num[v]);
         swap(num[u], num[v]);
         if (fa[u]) s[fa[u]].insert(num[u]); if (fa[v]) s[fa[v]].insert(num[v]);

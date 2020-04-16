@@ -103,7 +103,7 @@ inline int solve() {
 #define open(x) freopen(x".in", "r", stdin), freopen(x".out", "w", stdout)
 
 int main() {
-    open("data10");
+    open("data6");
     scanf("%d", &n);
     for (int i = 1; i <= n; i++) scanf("%d", &num[i]);
     for (int i = 1, a, b; i < n; i++) scanf("%d%d", &a, &b), adde(a, b);
