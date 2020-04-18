@@ -1,4 +1,4 @@
-题面：problems/T1(T2, T3)/main.pdf`
+题面：`problems/T1(T2, T3)/main.pdf`
 
 题解：`solution/main.pdf`
 
