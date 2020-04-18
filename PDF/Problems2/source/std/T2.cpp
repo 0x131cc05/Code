@@ -106,8 +106,6 @@ template<class T> inline void read(T &x) {
     while (isdigit(c)) x = x * 10 + c - '0', c = getchar();
 }
 
-#define open(x) freopen(x".in", "r", stdin), freopen(x".out", "w", stdout)
-
 int main() {
     read(n);
     for (int i = 1; i <= n; i++) read(num[i]);
