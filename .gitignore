@@ -2,5 +2,9 @@
 *.in
 *.out
 *.zip
+<<<<<<< HEAD
 /.vscode/
 /.ssh/
+=======
+/.vscode/
+>>>>>>> 6a864886549d181dfe1647df193bcda8326ad78c
