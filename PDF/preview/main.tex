@@ -1,0 +1,73 @@
+\documentclass{beamer}
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+\usepackage{xeCJK}
+\usefonttheme[onlymath]{serif}
+\begin{document}
+
+\begin{frame}
+    \title{砸题选讲}
+    \author{不保证题目按照难度递增排列}
+    \begin{titlepage}
+    \end{titlepage}
+\end{frame}
+
+\begin{frame}{1}
+    \begin{itemize}
+        \item 有两个人，第一个人会在$[a_1, b_1], [a_2, b_2], \cdots, [a_X, b_X]$这些时间段在线
+        \item 第二个人会在$[c_1, d_1], [c_2, d_2], \cdots, [c_Y, d_Y]$这些时间段在线
+        \item 你需要统计有多少个$T$，满足在$1\sim N$的时间内的$T, 3T, 5T,\cdots$时刻第一个人在线，
+        $2T, 4T, 6T, \cdots$时刻第二个人在线
+        \item $N \leq 10^9, X, Y\leq 300$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{2}
+    \begin{itemize}
+        \item 有一个对撞机，对撞机里面有一些质子，第$i$个质子的位置在$x_i$，速度为$v_i$
+        \item 在实验开始的时候，每个质子会随机一个方向（左或者右）发射出去，第$i$个质子朝右发射的概率是$p_i$
+        \item 问实验开始后期望多久会发生第一次碰撞，如果实验结束之前都没有发生任何碰撞，则认为碰撞时间为$0$
+        \item $n \leq 10^5, v \leq 10^6, x \leq 10^9$，对$998244353$取模
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{3}
+    \begin{itemize}
+        \item 定义函数$f(x)$，当$k \mid x$时$f(x) = f(\frac xk)$，否则$f(x) = x$
+        \item 黑板上有$n$个数，每次你可以选择其中的两个数$a_1, a_2$，从黑板上擦去这两个数，然后写下$f(a_1 + a_2)$
+        \item 问最终黑板上能否仅剩下$1$这一个数
+        \item $n \leq 16, k, \sum a_i \leq 2000$，保证所有$a_i$都不能被$k$整除
+        \item 要求构造方案
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{4}
+    \begin{itemize}
+        \item 有$n$个开关，一开始所有开关都是关上的
+        \item 给定一个状态$s$，你要使得第$i$个开关到达状态$s_i$
+        \item 每个开关都有一个权值$p_i$，每一轮会选择一个开关，翻转这个开关的状态。第$i$个开关被选择的概率是$\frac{p_i}{\sum p_j}$
+        \item 问期望多少轮之后所有开关均达到目标状态
+        \item $n\leq 100, \sum p_i\leq 2000$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{5}
+    \begin{itemize}
+        \item 对于一个$n\times m$的网格图，我们定义这张网格图的“难度”为从$(1, 1)$出发，走到$(n, m)$，每次只能向右或者向下走的方案数
+        \item 额外指定了$k$组障碍，每组障碍$\{(x_1, y_1),(x_2, y_2)\}$表示你不能从$(x_1, y_2)$这个格子走到$(x_2, y_2)$，保证$(x_2, y_2)$是$(x_1, y_1)$的右边或者下面那个与其相邻的格子
+        \item 你需要构造一张这样的网格图，并指定$k$组障碍，使得最终这张图的难度恰好为$T$
+        \item $n, m, k$自己定，但必须保证$n, m\leq 50, k\leq 300$
+        \item $T\leq 10^{18}$，保证有解
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{6}
+    \begin{itemize}
+        \item 给定两个仅包含$AB?$的字符串$X, Y$，其中$?$表示这个位置可以是$A$，也可以是$B$
+        \item 你需要统计$01$串有序对$(S, T)$的数量，使得将$X, Y$中的$A$替换成$S$，$B$替换成$T$之后，$X, Y$相同，并且满足$|S|, |T|\leq n$且$S, T$均不能是空串
+        \item 答案为所有可能$X, Y$串对应的$(S, T)$串的数量之和
+        \item $|X|, |Y|, n\leq 3\times 10^5$，对$10^9 + 7$取模
+    \end{itemize}
+\end{frame}
+
+\end{document}

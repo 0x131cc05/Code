@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{生成函数}{2}{0}{1}
+\beamer@sectionintoc {2}{组合计数}{123}{0}{2}
+\beamer@sectionintoc {3}{斯特林反演}{162}{0}{3}
+\beamer@sectionintoc {4}{单位根反演}{247}{0}{4}

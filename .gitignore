@@ -1,0 +1,6 @@
+*.exe
+*.in
+*.out
+*.zip
+/.vscode/
+/.ssh/
