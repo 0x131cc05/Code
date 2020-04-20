@@ -5,7 +5,7 @@ const int N = 100010;
 const int M = 1000010;
 
 int fa[N + M], mx[N + M], at[N + M], v[N + M], ch[2][N + M], rev[N + M];
-
+ 
 inline void connect(int u, int f, int son) { fa[u] = f, ch[son][f] = u, fa[0] = 0; }
 
 inline bool isroot(int u) { return (u != ch[1][fa[u]] && u != ch[0][fa[u]]) || !u; }

@@ -1,56 +1,55 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int maxn=1e7+20;
-int p[maxn],n,m;
-char s[maxn],t[maxn];
-int len=0;
-int ans[maxn],nxt[maxn];
-void solve(int l,int r)
-{
-	//cout<<l<<' '<<r<<endl;
-	if(l>r)return ;
-	len=0;
-	for(int i=l;i<=r;i++)t[++len]=s[i];
-	for(int i=2;i<=len;i++)
-	{
-		int j=nxt[i-1];
-		while(j&&t[j+1]!=t[i])j=nxt[j];
-		if(t[j+1]==t[i])j++;
-		nxt[i]=j;
-	}
-	int now=len,lst=1;
-	//cout<<len<<endl;
-	while(now)
-	{
-		//cout<<now<<endl;
-		for(int i=lst;i<=len-nxt[now];i++)
-		if(n>i)
-		{
-			cout << i << endl;
-			ans[n-i]=true;
-			//cout<<n<<endl;
-			//if(n-i>10000)printf("fuck\n");
-		}
-		lst=len-nxt[now]+2,now=nxt[now];
-	}
+
+typedef long long ll;
+const int N=2e5+5;
+const int inf=1e9;
+int n,m,l,r,ans;
+int a[N],p[N],dp[N];
+inline void init(){
+    for (int i=1;i<=n;++i)
+        r=max(r,a[i+1]-a[i]-1);
+    for (int i=1;i<=n;++i)
+        if (a[i+1]-a[i]-1==r){
+            for (int j=1;j<=n;++j) p[j]=a[i+j];
+            for (int j=n;j;--j) p[j]-=p[1];
+            return;
+        }
 }
-int main()
-{
-	//freopen("T2.in","r",stdin);
-	//freopen("T2.out","w",stdout);
-	while(~scanf("%s",s+1))
-	{
-		n=strlen(s+1),m=0;
-		if(n==0){printf("0\n");continue;}
-		for(int i=0;i<=n;i++)ans[i]=0;
-		for(int i=n+1;i<=2*n;i++)s[i]=s[i-n];
-		p[1]=0;
-		for(int i=1;i<=n;i++)if(s[i]==s[i+1])p[++m]=i;
-		if(!m)printf("1");
-		else printf("0"),p[++m]=p[1]+n;
-		for(int i=1;i<m;i++)solve(p[i]+1,p[i+1]);
-		if(!m)solve(1,2*n);
-		for(int i=1;i<n-1;i++)printf("%c",ans[i]?'1':'0');
-		printf("0\n");
-	}
+inline bool chk(int x){
+	for (int i = 1; i <= n; i++) cout << p[i] << ' ';
+	puts("");
+    for (int st=1;st<=2;++st){
+        dp[st]=(st==1)?0:max(p[st],x);
+        for (int i=st+1;i<=n;++i){
+            dp[i]=dp[i-1];
+            if (dp[i-1]>=p[i]-1) dp[i]=p[i]+x;
+            if (dp[i-1]>=p[i]-x-1) dp[i]=max(dp[i],p[i]);
+            if (i!=st+1 && dp[i-2]>=p[i]-x-1) dp[i]=max(dp[i],p[i-1]+x);
+			cout << st << ' ' << i << ' ' << p[i] << ' ' << dp[i] << endl;
+        }
+        if (dp[n]>=min(m-1,m+p[st]-x-1)) return 1;
+    }
+    return 0;
+}
+
+inline int read() {
+	int x; scanf("%d", &x);
+	return x;
+}
+
+int main(){
+    m=read(),n=read();
+    if (n==1) return printf("%d\n",m-1),0;
+    for (int i=1;i<=n;++i) 
+        a[i+n]=(a[i]=read())+m;
+    sort(a+1,a+(n<<1)+1),init();
+	cout << chk(1) << endl;
+    while (l<=r){
+        int mid=(l+r)>>1;
+        if (chk(mid)) ans=mid,r=mid-1;
+        else l=mid+1;
+    }
+    printf("%d\n",ans);
+    return 0;
 }
