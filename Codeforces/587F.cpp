@@ -2,9 +2,10 @@
 using namespace std;
 
 const int N = 200010;
-const int SZ = 450;
+const int SZ = 350;
 
 typedef pair<int, int> P;
+typedef long long LL;
 
 int x[N], y[N], c[N], m = 127, rk[N], height[N], sa[N];
 
@@ -23,7 +24,8 @@ inline void SA(char s[], int len) {
         for (int i = 1; i <= len; i++) if (sa[i] > k) y[++num] = sa[i] - k;
         sort(len), memcpy(y, x, sizeof(x)), num = x[sa[1]] = 1;
         for (int i = 2; i <= len; i++) 
-            x[i] = y[sa[i]] == y[sa[i - 1]] && y[sa[i] + k] == y[sa[i - 1] + k] ? num : ++num;
+            x[sa[i]] = (y[sa[i]] == y[sa[i - 1]] && y[sa[i] + k] == y[sa[i - 1] + k]) ? num : ++num;
+        if (num == len) break; m = num;
     }
 }
 
@@ -45,7 +47,7 @@ inline void get(char s[], int len) {
 }
 
 inline int LCP(int l, int r) {
-    if (l == r) return 1e9;
+    l++; if (l > r) return 1e9;
     int len = lg[r - l + 1];
     return min(st[len][l], st[len][r - (1 << len) + 1]);
 }
@@ -56,7 +58,7 @@ inline P find(int pos, int len, int n) {
         if (LCP(mid = (l + r) >> 1, pos) >= len) L = mid, r = mid - 1;
         else l = mid + 1;
     }
-    l = pos + 1, r = n;
+    l = pos, r = n;
     while (l <= r) {
         if (LCP(pos, mid = (l + r) >> 1) >= len) R = mid, l = mid + 1;
         else r = mid - 1;
@@ -66,7 +68,7 @@ inline P find(int pos, int len, int n) {
 
 struct block {
 
-int num[N], tag[SZ], belong[N], n;
+int num[N / 2], tag[SZ], belong[N / 2], n;
 
 inline void pre(int len) {
     n = len;
@@ -87,7 +89,7 @@ inline void update(int l, int r) {
 
 } T;
 
-int appear[N], len[N], L[N], R[N], ct[N][SZ], sum[N], id[N], fuck, A[N], ans[N];
+int appear[N], len[N], L[N], R[N], ct[N / 2][SZ], sum[N], id[N], fuck; LL ans[N], A[N];
 
 char s[N], tmp[N]; vector<int> zjk[N];
 
@@ -97,6 +99,8 @@ struct tcurts {
 
 vector<tcurts> q[N];
 
+int val[N * 2], tot, B[N];
+
 int main() {
     int n, m; scanf("%d%d", &n, &m); int tp = 0; vector<int> wkr;
     for (int i = 1; i <= n; i++) {
@@ -105,10 +109,11 @@ int main() {
         if (i != n) s[++tp] = '$';
         if (len[i] > SZ) wkr.push_back(i), id[i] = ++fuck;
     }
-    SA(s, tp), get(s, tp), T.pre(tp);
+    SA(s, tp), get(s, tp);
     for (int i = 1; i <= n; i++) {
         P res = find(rk[appear[i]], len[i], tp);
-        L[i] = res.first, R[i] = res.second;
+        L[i] = res.first, R[i] = res.second, val[++tot] = L[i], val[++tot] = R[i];
+        if (len[i] <= SZ) for (int j = 1; j <= len[i]; j++) val[++tot] = rk[appear[i] + j - 1];
     }
     for (auto t : wkr) {
         for (int i = 1; i <= tp; i++) sum[i] = 0;
@@ -116,6 +121,12 @@ int main() {
         for (int i = 1; i <= tp; i++) sum[i] += sum[i - 1];
         for (int i = 1; i <= n; i++) ct[i][id[t]] = sum[R[i]] - sum[L[i] - 1];
     }
+    sort(val + 1, val + tot + 1), tot = unique(val + 1, val + tot + 1) - val - 1, T.pre(tot);
+    for (int i = 1; i <= n; i++) {
+        L[i] = lower_bound(val + 1, val + tot + 1, L[i]) - val;
+        R[i] = lower_bound(val + 1, val + tot + 1, R[i]) - val;
+    }
+    for (int i = 1; i <= tp; i++) B[i] = lower_bound(val + 1, val + tot + 1, i) - val;
     for (int i = 1; i <= m; i++) {
         int l, r, k; scanf("%d%d%d", &l, &r, &k);
         q[r].push_back((tcurts){ i, k, 1 }), q[l - 1].push_back((tcurts){ i, k, -1 });
@@ -124,12 +135,12 @@ int main() {
         T.update(L[i], R[i]);
         for (auto t : wkr) A[t] += ct[i][id[t]];
         for (auto t : q[i]) {
-            int k = t.k, res = A[k];
+            int k = t.k; LL res = A[k];
             if (!id[k]) for (int i = 1; i <= len[k]; i++) 
-                res += T.query(rk[appear[k] + i - 1]);
+                res += T.query(B[rk[appear[k] + i - 1]]);
             ans[t.id] += res * t.w;
         } 
     }
-    for (int i = 1; i <= m; i++) printf("%d\n", ans[i]);
+    for (int i = 1; i <= m; i++) printf("%lld\n", ans[i]);
     return 0;
 }
