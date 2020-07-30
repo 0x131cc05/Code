@@ -14,7 +14,6 @@ void dfs(int u) {
 int main() {
 	int t = n * (n - 1) / 2, res = 0;
 	for (int s = 0; s < 1 << t; s++) {
-		if (__builtin_popcount(s) < n - 2) continue;
 		int ct = 0; memset(G, 0, sizeof(G)), memset(vis, 0, sizeof(vis)), fuck = 0;
 		for (int i = 0; i < n; i++)
 			for (int j = i + 1; j < n; j++) {
