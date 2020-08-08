@@ -69,7 +69,7 @@ void Shift(int A[], int n) {
 int a[N], b[N];
 
 int main() {
-    freopen("test1.in", "r", stdin), freopen("out.out", "w", stdout);
+//    freopen("test1.in", "r", stdin), freopen("out.out", "w", stdout);
     int n, mx = 0; scanf("%d", &n), frac[0] = inv[0] = 1;
     for (int i = 1; i <= n; i++) scanf("%d%d", &a[i], &b[i]), a[i]++, mx = max(mx, a[i]);
     for (int i = 1; i <= n; i++) a[i] += b[i], b[i] = mx - (a[i] - b[i]);
