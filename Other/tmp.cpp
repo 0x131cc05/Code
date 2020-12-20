@@ -1,28 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int n = 8;
-
-int G[n][n], vis[n], fuck = 0;
-
-void dfs(int u) {
-	fuck++, vis[u] = 1;
-	for (int i = 0; i < n; i++) if (G[u][i] && !vis[i])
-		dfs(i);
+char gc() {
+    static char s[1000000], *p1 = s, *p2 = s;
+    return p1 == p2 ? (p2 = (p1 = s) + fread(p1, 1, 1000000, stdin), p1 == p2 ? EOF : *p1++) : *p1++;
 }
 
+template<class T> void read(T &x) {
+    x = 0; char c = gc();
+    while (!isdigit(c)) c = gc();
+    while (isdigit(c)) x = x * 10 + c - '0', c = gc();
+}
+
+template<class T, typename... Tail> void read(T &x, Tail&... tail) {
+   read(x), read(tail...);
+}
+
+void print(int x) {
+    if (x >= 10) print(x / 10);
+    putchar(x % 10 + '0');
+}
+
+const int N = 5000010;
+
+int dfsn, dfn[N], ed[N], n; vector<int> G[N];
+
+void dfs(int u) {
+    dfn[u] = ++dfsn;
+    for (auto v : G[u]) dfs(v);
+    ed[u] = dfsn;
+}
+
+int stk[N], top;
+
 int main() {
-	int t = n * (n - 1) / 2, res = 0;
-	for (int s = 0; s < 1 << t; s++) {
-		if (__builtin_popcount(s) < n - 2) continue;
-		int ct = 0; memset(G, 0, sizeof(G)), memset(vis, 0, sizeof(vis)), fuck = 0;
-		for (int i = 0; i < n; i++)
-			for (int j = i + 1; j < n; j++) {
-				if (s & 1 << ct) G[i][j] = G[j][i] = 1;
-				ct++;
-			}
-		G[0][n - 1] = 1, dfs(0);
-		if (fuck == n) res++;
-	}
-	cout << res << endl;
+    read(n);
+    for (int i = 2, a; i <= n; i++) read(a), G[a].push_back(i);
+    dfs(1);
+    for (int i = 1; i <= n; i++) {
+        while (top && (dfn[i] < dfn[stk[top]] || dfn[i] > ed[stk[top]])) top--;
+        stk[++top] = i, print(top), puts("");
+    }
 }
