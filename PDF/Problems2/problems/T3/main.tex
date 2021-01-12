@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage{xeCJK}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{booktabs}
+\usepackage{geometry}  
+\usepackage{titlesec}   
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{titlesec} 
+% \pagestyle{fancy} 
+\geometry{left=2.5cm,right=3.5cm,top=2.5cm,bottom=2.5cm}
+
+\setlength{\parindent}{2em}
+\linespread{1.3}
+
+\date{}
+\begin{document}
+\newpagestyle{main}{            
+    \sethead{膜您赛}{}{\sectiontitle}     %设置页眉
+    \setfoot{}{第\thepage 页，共2页}{}      %设置页脚，可以在页脚添加 \thepage  显示页数
+    \headrule                                      % 添加页眉的下划线
+    \footrule                                       %添加页脚的下划线
+}
+\pagestyle{main}
+
+\setcounter{section}{2}
+
+\section{T3 风暴}
+
+当希望凋零，有人仍选择囿于黑暗。\par
+
+一场规模史无前例的暴风雨在尼文境内肆虐，摧毁了本就为数不多的连接各个城市的道路。尼文的的城市可以抽象为一个$n\times m$的矩阵，每个坐标$(i, j)$处都有一座城市。一开始两个城市之间有一条\textbf{双向道路}连接当且仅当这两个城市的位置相邻，即这两个城市的坐标满足$|x_1 - x_2| + |y_1 - y_2| = 1$。\par
+暴风雨停息之后，有若干条连接这些城市的道路被摧毁了。具体来说，每条道路都有独立的$p$的概率被摧毁，被摧毁的道路无法通行。\par
+尼文的首都是坐标为$(1, 1)$的城市，而精灵之树则位于$(n, m)$。为了估计暴风雨给尼文带来的损失，你迫切地想知道，这两座城市仍然连通的概率有多大。\par
+
+\subsection{输入格式}
+
+输入包含多组数据。\par
+第一行一个整数$T$，表示数据组数。\par
+接下来$T$行，每行两个整数$n, m$以及一个不超过$1$的小数$p$，表示矩阵的大小以及每条路径断开的概率。
+
+\subsection{输出格式}
+
+对于每组数据输出一行一个小数，表示$(1, 1)$与$(n, m)$连通的概率。\par
+你的答案与标准答案的绝对误差不能超过$10^{-6}$。
+
+\subsection{样例 1 输入}
+
+\begin{lstlisting}
+    3
+    2 2 0.5
+    3 3 0.4
+    4 5 0.7
+\end{lstlisting}
+
+\subsection{样例 1 输出}
+
+\begin{lstlisting}
+    0.4375000000000
+    0.4767412101120
+    0.0071313208832
+\end{lstlisting}
+
+\subsection{提示}
+
+$0.4375 = \frac{7}{16}$
+
+\subsection{数据范围}
+
+对于$10\%$的数据，保证$n, m = 2$。\par
+对于$30\%$的数据，保证$n, m \leq 4, T = 1$。\par
+对于$60\%$的数据，保证$m \leq 50$。\par
+对于$100\%$的数据，$1\leq n\leq 8, 1\leq m \leq 10^{18}, T\leq 50, 0.1\leq p\leq 1$，且$p$最多为四位小数。\par
+
+\end{document}
