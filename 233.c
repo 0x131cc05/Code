@@ -1,0 +1,1 @@
+﻿a,b,c=0;main(){scanf("%*d%d%d",&b,&c),printf("%d",(b-c+(a=1e9+7))%a);}
