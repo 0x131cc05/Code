@@ -10,18 +10,14 @@ inline LL rnd() {
 }
 
 int main() {
-    freopen("in.in", "w", stdout);
+//    freopen("in.in", "w", stdout);
     srand((long long)new char + time(0));
-    cout << n << endl;
-    for (int i = 1; i <= n; i++)
-        printf("%d %d %lld\n", rand() % 100 + 1, rand() % 100 + 1, rnd());
-    cout << m << endl;
-    for (int i = 1; i <= m; i++) {
-        int t = rand() % 4;
-        if (t == 0) printf("L ");
-        else if (t == 1) printf("R ");
-        else if (t == 2) printf("U ");
-        else printf("D ");
-        printf("%d %d\n", rand() % 100 + 1, rand() % n);
+    puts("1");
+    int mod = 17;
+    printf("%d %d %d %d %d %d %d 10000\n", rand() % mod, rand() % mod, rand() % mod, rand() % mod, rand() % mod, mod, rand() % mod);
+    for (int i = 1; i <= 10000; i++) {
+        LL l = rnd() + 1, r = rnd() + 1;
+        if (l > r) swap(l, r);
+        printf("%lld %lld\n", l, r);
     }
 }

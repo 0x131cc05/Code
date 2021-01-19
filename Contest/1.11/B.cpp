@@ -75,7 +75,7 @@ void tarjan(int u) {
 int wkr[N], zjk[N];
 
 int main() {
-    freopen("b.in", "r", stdin), freopen("b.out", "w", stdout);
+    // freopen("b.in", "r", stdin), freopen("b.out", "w", stdout);
     int m; scanf("%d%d", &n, &m);
     for (int i = 1; i <= m; i++) {
         int op, a, b; scanf("%d%d%d", &op, &a, &b);

@@ -49,7 +49,7 @@ LL calc(LL r, int A, int x) {
 } 
 
 int main() {
-    freopen("a.in", "r", stdin), freopen("a.out", "w", stdout);
+    // freopen("a.in", "r", stdin), freopen("a.out", "w", stdout);
     int a; LL b, n; cin >> a >> b >> n;
     LL l = a + b, r = a * n + b, all = 0;
     if (!((b % a) & 1)) all += count(l, r - 1, a * 2, b % a);
