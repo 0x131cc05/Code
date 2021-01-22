@@ -33,29 +33,3 @@ public:
         return res; 
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'
-// int main() {
-//     AlienAndPermutation solver;
-//     cout << solver.getNumber({8, 3, 1, 5, 10, 4, 7, 9, 6, 2},
-// 3) << endl;
-// }
