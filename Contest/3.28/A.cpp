@@ -97,7 +97,7 @@ int main() {
         p[i] = ((LL)(t * 10 + 0.1)) * inv % mod;
     }
     vector<int> base(n);
-    build(base), Gauss(), printf("%d\n", process());
+    build(base), (), printf("%d\n", process());
 //    cout << tot << endl;
     return 0;
 }
