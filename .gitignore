@@ -1,9 +1,0 @@
-*.exe
-*.in
-*.out
-*.ans
-*.zip
-*.bat
-*.json
-/.vscode/
-/.ssh/
