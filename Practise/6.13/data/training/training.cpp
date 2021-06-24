@@ -44,6 +44,7 @@ void dfs1(int u, int f) {
         val[st] = max(val[st], res + get<2>(t));
     }
     int tot = G[u].size();
+    assert(tot <= 10);
     for (int s = 1; s < 1 << tot; s++) {
         for (int i = 1; i <= tot; i++) if (s & (1 << i - 1)) 
             val[s] = max(val[s], val[s ^ (1 << i - 1)] + val[1 << i - 1]);
@@ -57,6 +58,7 @@ void dfs1(int u, int f) {
 }
 
 int main() {
+//    freopen("training7.in", "r", stdin), freopen("training7.ans", "w", stdout);
     int n, m; scanf("%d%d", &n, &m);
     vector<tuple<int, int, int>> t;
     for (int i = 1; i <= m; i++) {
